@@ -21,8 +21,18 @@ class Snake:
 
         self.segments[0].forward(10)
 
-    def move_right(self):
-        self.segments[0].right(90)
+    def up(self):
+        self.segments[0].setheading(90)
 
-    def move_left(self):
-        self.segments[0].left(90)
+    def left(self):
+        if self.segments[0].heading() == 90 or  self.segments[0].heading() == 270:
+            self.segments[0].setheading(180)
+
+    def right(self):
+        if self.segments[0].heading() == 90 or self.segments[0].heading() == 270:
+            self.segments[0].setheading(0)
+    def down(self):
+        if self.segments[0].heading() ==  90:
+            return None
+        self.segments[0].setheading(270)
+        return None
