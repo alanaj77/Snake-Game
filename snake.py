@@ -1,6 +1,6 @@
 from turtle import  Turtle
 STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
-MOVE_DISTANCE = 10
+MOVE_DISTANCE = 20
 UP = 90
 DOWN = 270
 LEFT = 180
@@ -14,7 +14,10 @@ class Snake:
     def create_segment(self):
         if len(self.segments) == 0:
             for pos in STARTING_POSITIONS:
-                new_segment = Turtle("square")
+                if pos == STARTING_POSITIONS[0]:
+                    new_segment = Turtle("circle")
+                else:
+                    new_segment = Turtle("square")
                 new_segment.color("white")
                 new_segment.penup()
                 new_segment.goto(pos)
@@ -36,14 +39,7 @@ class Snake:
             new_x = self.segments[seg_num - 1].xcor()
             new_y = self.segments[seg_num - 1].ycor()
             self.segments[seg_num].goto(new_x, new_y)
-        x_cord = self.head.xcor()
-        y_cord = self.head.ycor()
-        if x_cord > SCREEN_SIZE or y_cord > SCREEN_SIZE or x_cord < -SCREEN_SIZE or  y_cord < -SCREEN_SIZE:
-            #print(x_cord)
-            if self.head.heading() ==  DOWN or self.head.heading() == UP:
-                self.head.goto(x_cord,-y_cord)
-            else:
-                self.head.goto(-x_cord, y_cord)
+
         self.head.forward(MOVE_DISTANCE)
 
     def up(self):
@@ -67,3 +63,10 @@ class Snake:
         return None
     def position_of_snake(self):
         return self.head.pos()
+    def is_collided(self):
+        for seg in self.segments:
+            if seg.distance(self.head) < 20:
+                return  True
+            else:
+                return False
+        return None
